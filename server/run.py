@@ -68,6 +68,21 @@ def save_random(n1, n2, seed, content):
             f.write(f'{n1},{n2},{seed}|{content}\n')
 
 
+def save_it2(client_ip, speak_text, id_speaker):
+    with open('log.txt', 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+    if lines:
+        last_line = lines[-1].strip()  # 获取最后一行数据
+        last_data = last_line.split('|')[0] if '|' in last_line else ''
+    else:
+        last_data = ''
+
+    if last_data != f'{client_ip},{speak_text},{id2role(id_speaker)}':
+        # print('添加')
+        with open('log.txt', 'a', encoding='utf-8') as f:
+            f.write(f'{client_ip},{speak_text},{id2role(id_speaker)}|{content}\n')
+
+
 @app.route('/run', methods=['GET'])
 def run():
     global indices, content_list
@@ -90,18 +105,18 @@ def run():
 
     client_ip = request.remote_addr
     user_agent = request.headers.get('User-Agent')
-
+    save_it2(client_ip, speak_text, id_speaker)
     with open(temp_wav_file, "wb") as f:
         f.write(stream.getvalue())
 
     # 其他代码...
 
-    return send_file(temp_wav_file,mimetype='audio/wav')
+    return send_file(temp_wav_file, mimetype='audio/wav')
 
 
 @app.route('/content', methods=['GET'])
 def content():
-    with open('info.txt', 'r', encoding='utf-8') as f:
+    with open('log.txt', 'r', encoding='utf-8') as f:
         text = f.read()
     formatted_text = text.replace('\n', '<br>')
 
