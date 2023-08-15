@@ -36,7 +36,7 @@ def id2role(id):
     for e in range(len(speaker)):
         pattern = r"\（.*?\）"
         speaker[e] = re.sub(pattern, "", speaker[e], re.S)
-    return speaker[id]
+    return speaker[int(id)]
 
 
 def get_random():
@@ -68,19 +68,26 @@ def save_random(n1, n2, seed, content):
             f.write(f'{n1},{n2},{seed}|{content}\n')
 
 
-def save_it2(client_ip, speak_text, id_speaker):
-    with open('log.txt', 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    if lines:
-        last_line = lines[-1].strip()  # 获取最后一行数据
-        last_data = last_line.split('|')[0] if '|' in last_line else ''
-    else:
-        last_data = ''
-
-    if last_data != f'{client_ip},{speak_text},{id2role(id_speaker)}':
-        # print('添加')
-        with open('log.txt', 'a', encoding='utf-8') as f:
-            f.write(f'{client_ip},{speak_text},{id2role(id_speaker)}|{content}\n')
+def save_it2(client_ip, speak_text, id_speaker, user_agent):
+    import time
+    local_time = time.localtime(time.time())
+    # 格式化输出具体时间
+    formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", local_time)
+    formatted_time = formatted_time.replace('\n ', '').replace('\n', '')
+    # print(formatted_time)
+    # with open('log.txt', 'r', encoding='utf-8') as f:
+    #     lines = f.readlines()
+    # if lines:
+    #
+    #     last_line = lines[-1].strip()  # 获取最后一行数据
+    #     last_data = last_line.split('|')[0] if '|' in last_line else ''
+    # else:
+    #     last_data = ''
+    #
+    # if last_data != f'{client_ip},{speak_text},{id2role(id_speaker)}':
+    #     # print('添加')
+    with open('log.txt', 'a', encoding='utf-8') as f:
+        f.write(f'\n\n|{client_ip}|{speak_text}|{id2role(id_speaker)}|{content}|{formatted_time}|\n\n')
 
 
 @app.route('/run', methods=['GET'])
@@ -97,15 +104,15 @@ def run():
         voice_noise = 0.25
     if voice_length is None:
         voice_length = 1.8
-
-    url = f'http://192.168.193.23:23456/voice/vits?text={speak_text}&id={id_speaker}&format=wav&lang=zh&length={voice_length}&noise={voice_noise}&noisew={noisew}'
+    speak_text = speak_text.replace('\n ', '').replace('\n', '')
+    url = f'http://100.92.125.90:23456/voice/vits?text={speak_text}&id={id_speaker}&format=wav&lang=zh&length={voice_length}&noise={voice_noise}&noisew={noisew}'
     r = requests.get(url)
     stream = io.BytesIO(r.content)
     temp_wav_file = f"temp.wav"
 
     client_ip = request.remote_addr
     user_agent = request.headers.get('User-Agent')
-    save_it2(client_ip, speak_text, id_speaker)
+    save_it2(client_ip, speak_text, id_speaker, user_agent)
     with open(temp_wav_file, "wb") as f:
         f.write(stream.getvalue())
 
@@ -135,7 +142,7 @@ def ra():
     random_num1, random_num2, now_ten_minute = get_random()
     content = ''.join(content_list)
     save_random(random_num1, random_num2, now_ten_minute, content)
-    url = f'http://192.168.193.23:23456/voice/vits?text={speak_text}&id={random_num1}&format=wav&lang=zh&length={voice_length}&noise={voice_noise}'
+    url = f'http://100.92.125.90:23456/voice/vits?text={speak_text}&id={random_num1}&format=wav&lang=zh&length={voice_length}&noise={voice_noise}'
     r = requests.get(url)
     stream = io.BytesIO(r.content)
     temp_wav_file = f"temp.wav"
@@ -158,7 +165,7 @@ def emo():
     id_speaker = request.args.get('id_speaker', type=str)
     voice_length = request.args.get('length2', type=float)
     voice_noise = request.args.get('noise', type=float)
-    url = f'http://192.168.193.23:23456/voice/vits?text={speak_text}&id={id_speaker}&format=wav&lang=zh&length={voice_length}&noise={voice_noise}'
+    url = f'http://100.92.125.90:23456/voice/vits?text={speak_text}&id={id_speaker}&format=wav&lang=zh&length={voice_length}&noise={voice_noise}'
     r = requests.get(url)
     stream = io.BytesIO(r.content)
     temp_wav_file = f"temp.wav"
