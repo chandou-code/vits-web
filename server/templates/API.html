@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <title>接口文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .api-section {
+            margin-bottom: 20px;
+        }
+
+        .api-section div {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .api-section p {
+            margin: 15px 23px;
+        }
+
+        .api-section code {
+            background-color: #f4f4f4;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>VITS接口文档</h1>
+
+    <div class="api-section">
+        <div>www.纯度.site:5000/run?text=你要合成的文字&id_speaker=119&length=2.25&noise=0.32&noisew=0.232&lang=zh</div>
+        <p>【说明】length是长度 越大越慢，noise是情感起伏大小，noisew是音素发音长度，lang可以是auto(混合)或者ja(日语)，GET，单次最多600字。</p>
+        <p>【说明】为了节约内存，初次合成的时间包含开启vits的耗时，有点久，往后的三分钟内合成语音都是正常GPU速度，三分钟内没有新的请求就会重启服务释放内存</p>
+    </div>
+
+    <div class="api-section">
+        <div>www.纯度.site:5000/models</div>
+        <p>【说明】返回模型列表</p>
+    </div>
+    <div class="api-section">
+        <div>www.纯度.site:5000/if</div>
+        <p>【说明】接口是否可用 如果可用返回True 不可用则404无法响应</p>
+
+    </div>
+</body>
+</html>

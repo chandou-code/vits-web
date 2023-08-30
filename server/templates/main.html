@@ -2,6 +2,8 @@
 <html lang="en">
 
   <head>
+   <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+
     <meta charset="UTF-8" />
     <title>关注纯度Official喵 关注纯度Official谢谢喵</title>
     <style>.search-container { display: flex; align-items: center; justify-content: flex-end; } .speaker-container { display: flex; align-items: center; } #search_speaker { flex: 1; margin-right: 5px; } #btn_search { flex-shrink: 0; }
@@ -14,6 +16,23 @@
   .clear-button {
     margin-left: 10px; /* 调整按钮与文本框之间的距离 */
   }
+.floating-btn-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.floating-btn {
+  width: 100px;
+  height: 40px;
+  background-color: #ff9999;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 10px; /* 设置按钮之间的底部间距 */
+}
     </style>
     <!-- 引入 Bootstrap CSS 文件 -->
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
@@ -24,16 +43,31 @@
       <h1>GPU-VITS-web</h1>
       <small>内网穿透了云服务器和我家电脑，然后你们可以直接用公网ip访问我家电脑了.填入任意想合成的文字，这个用我家3070推理的，合成六百字只需要两秒钟</small>
       <div>
-        <small>【另外】接口调用：http://175.178.176.3:5000/run?text=你好&id_speaker=133&length=1.5&noise=0.25&noisew=0.4 单次合成上限600字</small>
-      </div>
+             </div>
+        <div>如果字数过长请等待跳转页面加载 不要重复请求</div>
+
+         <div class="floating-btn-container">
+               <a href="https://space.bilibili.com/12310947" target="_blank">
+              <div class="floating-btn">纯度</div>
+                </a>
+               <a href="http://www.xn--wxtz62e.site:5000/can_only_myself" target="_blank">
+              <div class="floating-btn">API历史记录</div>
+                </a>
+              <a href="http://www.纯度.site:5000/API" target="_blank">
+              <div class="floating-btn">接口文档</div>
+                </a>
+         </div>
+
+
       <div>
+
           <small>欢迎加入闲聊群691432604</small>
       </div>
-      <form id="apiForm" action="http://175.178.176.3:5000/run" method="get">
+      <form id="apiForm" action="http://www.纯度.site:5000/run" method="get">
         <div class="mb-lg-4">
           <label for="text">
           </label>
-          <p id="selected_speaker">已选中的说话人：安柏</p>
+          <p id="selected_speaker">已选中的说话人：派蒙</p>
           <textarea id="text" name="text" class="form-control" rows="7" placeholder="请输入文本" required></textarea>
             <div class="button-wrapper">
   <button class="clear-button" onclick="clearTextarea()">清除</button>
@@ -56,6 +90,7 @@
               </div>
             </div>
           </div>
+
           <div id="speaker_options" class="mb-3" style="height: 499px; overflow-y: scroll;">
             <!-- 这里是通过 JavaScript 动态生成选项 -->
           </div>
@@ -78,6 +113,7 @@
         <button type="submit" class="btn btn-primary">播放器生成</button>
       </form>
     </div>
+
     <!-- 引入 Bootstrap JS 文件 -->
     <script src="../static/js/jquery.slim.min.js">
     </script>
@@ -135,7 +171,7 @@
       function() {
         // 设置默认选中第一个说话人
         var speakerOptions = document.querySelectorAll('input[name="id_speaker"]');
-        speakerOptions[96].checked = true;
+        speakerOptions[551].checked = true;
       });
       function updateSliderValue(sliderId, displayId) {
         var slider = document.getElementById(sliderId);
