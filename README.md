@@ -1,2 +1,2 @@
-# vits_gpt_api
-内网穿透我家和服务器，然后别人就能用公网ip访问电脑合成vits，基于https://github.com/Artrajz/vits-simple-api
+GPU在线合成网站 部署到www.纯度.site:5000/
+https://github.com/Artrajz/vits-simple-api
