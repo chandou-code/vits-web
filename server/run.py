@@ -56,37 +56,8 @@ def id2role(id):
     return speaker[int(id)]
 
 
-# def get_random():
-#     import random
-#     import time
-#     now_seconds = int(time.time())  # 秒
-#     now_minute = int(now_seconds / 60)  # 分
-#     now_ten_minute = int(now_minute / 10)
-#     random.seed(now_ten_minute)
-#     random_num1 = random.randint(87, 147)
-#     random_num2 = random.randint(87, 147)
-#     return random_num1, random_num2, now_ten_minute
 
-
-def save_it2(client_ip, speak_text, id_speaker, url):
-    local_time = time.localtime(time.time())
-
-    formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", local_time)
-    formatted_time = formatted_time.replace('\n ', '').replace('\n', '')
-    # print(formatted_time)
-    # with open('log.txt', 'r', encoding='utf-8') as f:
-    #     lines = f.readlines()
-    # if lines:
-    #
-    #     last_line = lines[-1].strip()  # 获取最后一行数据
-    #     last_data = last_line.split('|')[0] if '|' in last_line else ''
-    # else:
-    #     last_data = ''
-    #
-    # if last_data != f'{client_ip},{speak_text},{id2role(id_speaker)}':
-    #     # print('添加')
-    with open('log.txt', 'a', encoding='utf-8') as f:
-        f.write(f'{formatted_time}|{client_ip} |{speak_text}|----------{url}|{id2role(id_speaker)}\n')
+#
 
 
 def get_location(ip):
